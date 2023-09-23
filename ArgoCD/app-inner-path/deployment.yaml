@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{$app-name}}
+  labels:
+    app:  {{$app-name}}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app:  {{$app-name}}
+  template:
+    metadata:
+      labels:
+        app:  {{$app-name}}
+    spec:
+      nodeName: tcct-dev-00
+      containers:
+      - name:  {{$app-name}}
+        image: {{$app-image-url}}:{{lastest-tag}}
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: {{$port}}
+        resources:
+          requests:
+            memory: "0"
+            cpu: "0"
+          limits:
+            memory: "0"
+            cpu: "0"
+      imagePullSecrets:
+      - name: {{$imagePullSecrets-name}}
